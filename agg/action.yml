@@ -1,0 +1,8 @@
+name: Agg
+description: Aggregate and setup ops
+runs:
+  using: 'node16'
+  main: 'main.js'
+outputs:
+  ops:
+    description: Operation matrix should run next

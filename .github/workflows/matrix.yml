@@ -1,0 +1,30 @@
+name: Dynamic matrix example
+on:
+  workflow_dispatch:
+jobs:
+  agg_1:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - id: agg
+        uses: ./agg
+    outputs:
+      ops: ${{steps.agg.outputs.ops}}
+
+  matrix_1:
+    needs: agg_1
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        op: ${{fromJson(needs.agg_1.outputs.ops)}}
+#    outputs:
+#      op_1: ${{ steps.step1.outputs.op_1 }}
+#      op_2: ${{ steps.step1.outputs.op_2 }}
+#      op_3: ${{ steps.step1.outputs.op_3 }}
+# limitation: only includes one output from the matrix
+#      steps: ${{ toJson(steps) }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./op
+        with:
+          op_id: ${{matrix.op}}
