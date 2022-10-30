@@ -6,10 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - run: npm install -ws
       - id: agg
         uses: ./agg
     outputs:
@@ -29,10 +25,6 @@ jobs:
 #      steps: ${{ toJson(steps) }}
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - run: npm install -ws
       - uses: ./op
         with:
-          op_id: ${{matrix.op}}
+          id: ${{matrix.op.id}}
