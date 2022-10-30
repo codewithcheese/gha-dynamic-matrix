@@ -4,5 +4,5 @@ runs:
   using: node16
   main: main.js
 inputs:
-  op_id:
-    description: Unique operation id
+  id:
+    description: Op id

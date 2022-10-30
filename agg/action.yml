@@ -3,6 +3,14 @@ description: Aggregate and setup ops
 runs:
   using: 'node16'
   main: 'main.js'
+inputs:
+  out_1:
+    description: Output of op 1
+  out_2:
+    description: Output of op 2
+  out_3:
+    description: Output of op 3
+
 outputs:
   ops:
     description: Operation matrix should run next

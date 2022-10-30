@@ -1,5 +1,8 @@
 name: Dynamic matrix example
 on:
+  push:
+    branches:
+      - master
   workflow_dispatch:
 jobs:
   agg_1:
@@ -17,14 +20,32 @@ jobs:
     strategy:
       matrix:
         op: ${{fromJson(needs.agg_1.outputs.ops)}}
-#    outputs:
-#      op_1: ${{ steps.step1.outputs.op_1 }}
-#      op_2: ${{ steps.step1.outputs.op_2 }}
-#      op_3: ${{ steps.step1.outputs.op_3 }}
-# limitation: only includes one output from the matrix
+    outputs:
+      out_1: ${{ steps.op.outputs.out_1 }}
+      out_2: ${{ steps.op.outputs.out_2 }}
+      out_3: ${{ steps.op.outputs.out_3 }}
+# limitation: only includes one output from the matrix. workaround: predefined output
 #      steps: ${{ toJson(steps) }}
     steps:
       - uses: actions/checkout@v2
-      - uses: ./op
+#      - id: op
+#        run: echo "::set-output name=out_${{ matrix.op.id }}::${{ matrix.op.id }}"
+      - id: op
+        uses: ./op
         with:
+# limitation: cannot pass object to input. workaround: pass each value as input
+#          op: ${{matrix.op}}
           id: ${{matrix.op.id}}
+
+  agg_2:
+    needs: [matrix_1]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{toJson(needs.matrix_1.outputs)}}"
+      - uses: actions/checkout@v2
+      - id: agg
+        uses: ./agg
+        with:
+          out_1: ${{needs.matrix_1.outputs.out_1}}
+          out_2: ${{needs.matrix_1.outputs.out_2}}
+          out_3: ${{needs.matrix_1.outputs.out_3}}
