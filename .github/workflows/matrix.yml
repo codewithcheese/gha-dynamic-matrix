@@ -24,6 +24,7 @@ jobs:
       out_1: ${{ steps.op.outputs.out_1 }}
       out_2: ${{ steps.op.outputs.out_2 }}
       out_3: ${{ steps.op.outputs.out_3 }}
+      steps: ${{ toJson(steps) }}
 # limitation: only includes one output from the matrix. workaround: predefined output
 #      steps: ${{ toJson(steps) }}
     steps:
@@ -46,6 +47,7 @@ jobs:
       - id: agg
         uses: ./agg
         with:
+#          limitation: act does not include all the outputs. workaround: continue testing on GHA
           out_1: ${{needs.matrix_1.outputs.out_1}}
           out_2: ${{needs.matrix_1.outputs.out_2}}
           out_3: ${{needs.matrix_1.outputs.out_3}}
