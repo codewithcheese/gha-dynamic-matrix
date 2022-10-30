@@ -1,0 +1,23 @@
+{
+  "name": "gha-dynamic-matrix",
+  "version": "1.0.0",
+  "description": "Example of dynamic matrix generation using GitHub Actions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codewithcheese/gha-dynamic-matrix.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codewithcheese/gha-dynamic-matrix/issues"
+  },
+  "homepage": "https://github.com/codewithcheese/gha-dynamic-matrix#readme",
+  "workspaces": [
+    "./agg",
+    "./op"
+  ]
+}
