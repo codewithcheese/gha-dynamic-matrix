@@ -51,3 +51,21 @@ jobs:
           out_1: ${{needs.matrix_1.outputs.out_1}}
           out_2: ${{needs.matrix_1.outputs.out_2}}
           out_3: ${{needs.matrix_1.outputs.out_3}}
+    outputs:
+      ops: ${{steps.agg.outputs.ops}}
+
+  matrix_2:
+    if: ${{ false }}
+    needs: agg_2
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        op: ${{fromJson(needs.agg_2.outputs.ops)}}
+    steps:
+      - run: echo "Hello world"
+
+  agg_3:
+    needs: matrix_2
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello world"
